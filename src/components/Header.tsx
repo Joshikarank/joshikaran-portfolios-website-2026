@@ -21,7 +21,7 @@ export default function Header() {
           href="#" 
           className="group text-xl font-semibold tracking-tight relative"
         >
-          <span className="relative z-10">joshi karan</span>
+          <span className="relative z-10">Joshi Karan.K</span>
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/0 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
         </Link>
 
