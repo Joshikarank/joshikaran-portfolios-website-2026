@@ -1,4 +1,7 @@
+"use client";
+
 import Timeline from "@/components/Timeline";
+// app/experience/page.tsx
 
 const experiences = [
   {
@@ -19,9 +22,24 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 px-6 max-w-6xl mx-auto">
-      <h2 className="text-3xl font-bold mb-10 text-center">Professional Experience</h2>
-      <Timeline experiences={experiences} />
+    <section id="experience" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#e9f8ea]/60 via-[#f8f6e8]/55 to-[#f44f2f]/15 dark:bg-gradient-to-br dark:from-purple-900/20 dark:via-blue-900/20 dark:to-cyan-900/20"></div>
+      <div className="absolute top-20 left-10 w-72 h-72 bg-[#e9f8ea]/30 dark:bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#f8f6e8]/25 dark:bg-blue-500/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-[#f44f2f]/12 dark:bg-purple-300/15 rounded-full blur-3xl animate-pulse delay-500"></div>
+
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center dark:text-white text-gray-900 drop-shadow-lg">
+          Professional Experience
+        </h2>
+        <p className="text-center dark:text-red-300 text-red-700 mb-16">My journey in software development</p>
+
+        <div className="space-y-8">
+          <Timeline experiences={experiences} />
+        </div>
+      </div>
     </section>
   );
 }
+

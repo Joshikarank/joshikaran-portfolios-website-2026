@@ -10,11 +10,21 @@ export default function Hero() {
             Backend + AI Engineer
           </p>
 
-          <h1 className="text-4xl font-bold sm:text-5xl md:text-6xl">
+          <h1
+            className="text-4xl font-bold sm:text-5xl md:text-6xl"
+            style={{
+              textShadow: '4px 4px 0 rgba(244, 79, 47, 0.25), 8px 8px 0 rgba(244, 79, 47, 0.15)',
+            }}
+          >
             Hi, I&apos;m JoshiKaran
           </h1>
 
-          <p className="mx-auto max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg lg:mx-0">
+          <p
+            className="mx-auto max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg lg:mx-0"
+            style={{
+              textShadow: '2px 2px 0 rgba(244, 79, 47, 0.12)',
+            }}
+          >
             Specializing in scalable system design and AI-first products, building reliable systems with strong architecture and clean code.
           </p>
 
@@ -23,7 +33,7 @@ export default function Hero() {
               <a href="#about">Learn More</a>
             </Button>
             <Button variant="outline" asChild>
-              <a href="https://github.com/" target="_blank" rel="noreferrer">
+              <a href="https://github.com/Joshikarank" target="_blank" rel="noreferrer">
                 GitHub
               </a>
             </Button>
