@@ -20,7 +20,9 @@ export default function Timeline({ experiences }: TimelineProps) {
   const router = useRouter();
 
   const handleArrowClick = (index: number) => {
-    if (index === 1) { // Locobuzz experience
+    if (index === 0) { // Part Matters experience
+      router.push('/partmatters');
+    } else if (index === 1) { // Locobuzz experience
       router.push('/locobuzz');
     }
   };
@@ -55,7 +57,7 @@ export default function Timeline({ experiences }: TimelineProps) {
                 <button 
                   onClick={() => handleArrowClick(index)}
                   className="absolute top-1/2 right-4 transform -translate-y-1/2 w-8 h-8 bg-[#f44f2f] dark:bg-purple-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-                  title="View more details about the job experience"
+                  title={`View detailed information about ${exp.company} experience`}
                 >
                   <ChevronRight className="w-4 h-4 text-white" />
                 </button>

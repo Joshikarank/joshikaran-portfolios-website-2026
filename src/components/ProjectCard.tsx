@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState, type MouseEvent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, GitBranch } from "lucide-react";
@@ -7,6 +10,7 @@ type Props = {
   description: string;
   tech: string[];
   github: string;
+  liveUrl?: string;
 };
 
 export default function ProjectCard({
@@ -14,7 +18,38 @@ export default function ProjectCard({
   description,
   tech,
   github,
+  liveUrl,
 }: Props) {
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    if (popupVisible) {
+      timeout = setTimeout(() => setIsFading(true), 2500);
+      const hideTimeout = setTimeout(() => {
+        setPopupVisible(false);
+        setIsFading(false);
+      }, 3000);
+      return () => {
+        clearTimeout(timeout);
+        clearTimeout(hideTimeout);
+      };
+    }
+  }, [popupVisible]);
+
+  const handleLiveClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!liveUrl) return;
+
+    const currentUrl = window.location.origin + window.location.pathname;
+    const targetUrl = liveUrl.startsWith("http") ? liveUrl : window.location.origin + liveUrl;
+
+    if (currentUrl === targetUrl || (liveUrl === "/" && window.location.pathname === "/")) {
+      event.preventDefault();
+      setPopupVisible(true);
+    }
+  };
+
   return (
     <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
       {/* Animated gradient border */}
@@ -57,21 +92,57 @@ export default function ProjectCard({
           </div>
         </div>
 
-        {/* CTA Button */}
-        <Button
-          variant="outline"
-          asChild
-          className="w-full group/btn border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-300"
-        >
-          <a href={github} target="_blank" className="flex items-center justify-center gap-2">
-            <GitBranch className="h-4 w-4" />
-            <span>View Repository</span>
-          </a>
-        </Button>
+        {/* CTA Buttons */}
+        <div className="space-y-3">
+          <Button
+            variant="outline"
+            asChild
+            className="w-full group/btn border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-300"
+          >
+            <a href={github} target="_blank" className="flex items-center justify-center gap-2">
+              <GitBranch className="h-4 w-4" />
+              <span>View Repository</span>
+            </a>
+          </Button>
+
+          {liveUrl && (
+            <Button
+              variant="secondary"
+              asChild
+              className="w-full group/btn border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all duration-300"
+            >
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={handleLiveClick}
+                className="flex items-center justify-center gap-2"
+              >
+                <ExternalLink className="h-4 w-4" />
+                <span>View Live Website</span>
+              </a>
+            </Button>
+          )}
+        </div>
       </CardContent>
 
       {/* Hover overlay effect */}
       <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
+
+      {popupVisible && (
+        <div
+          className={`absolute inset-0 z-50 flex items-center justify-center p-6 rounded-2xl bg-black/70 text-white backdrop-blur-sm transition-opacity duration-500 ${
+            isFading ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <div className="max-w-md rounded-3xl border border-white/20 bg-white/10 p-6 text-center shadow-2xl shadow-black/20">
+            <p className="text-lg font-semibold text-white mb-2">You're already looking at it.</p>
+            <p className="text-sm text-slate-200 leading-relaxed">
+              This portfolio is live right here. Built fast with an LLM agent helping me code while I stayed in control, deployed on Vercel, and actively maintained.
+            </p>
+          </div>
+        </div>
+      )}
     </Card>
   );
 }

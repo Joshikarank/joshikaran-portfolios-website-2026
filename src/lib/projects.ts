@@ -16,5 +16,12 @@ export const projects = [
     description: "Built a custom RAG pipeline with key-level (field-wise) retrieval, converting unstructured text into structured JSON schemas and leveraging FAISS embeddings to reduce token usage by 60% while improving factual accuracy and minimizing hallucinations through controlled response generation.",
     tech: ["RAG", "FAISS", "LLM", "Python"],
     github: "https://github.com/",
+  },
+  {
+    title: "Portfolio Website",
+    description: "Built and deployed my personal portfolio website on Vercel, maintaining it continuously while moving fast with an LLM-assisted coding workflow.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "LLM Agent"],
+    github: "https://github.com/",
+    liveUrl: "/",
   }
 ];
