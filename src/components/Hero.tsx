@@ -1,11 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center px-4 py-16">
       <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[1.7fr_1.3fr] items-center">
+        
+        {/* LEFT */}
         <div className="space-y-6 text-center lg:text-left">
+          
           <p className="text-base uppercase tracking-[0.35em] text-primary/80">
             Backend + AI Engineer
           </p>
@@ -13,7 +19,8 @@ export default function Hero() {
           <h1
             className="text-4xl font-bold sm:text-5xl md:text-6xl"
             style={{
-              textShadow: '4px 4px 0 rgba(244, 79, 47, 0.25), 8px 8px 0 rgba(244, 79, 47, 0.15)',
+              textShadow:
+                "4px 4px 0 rgba(244, 79, 47, 0.25), 8px 8px 0 rgba(244, 79, 47, 0.15)",
             }}
           >
             Hi, I&apos;m JoshiKaran
@@ -22,24 +29,47 @@ export default function Hero() {
           <p
             className="mx-auto max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg lg:mx-0"
             style={{
-              textShadow: '2px 2px 0 rgba(244, 79, 47, 0.12)',
+              textShadow: "2px 2px 0 rgba(244, 79, 47, 0.12)",
             }}
           >
-            Specializing in scalable system design and AI-first products, building reliable systems with strong architecture and clean code.
+            Specializing in scalable system design and AI-first products, building
+            reliable systems with strong architecture and clean code.
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
-            <Button asChild>
-              <a href="#about">Learn More</a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="https://github.com/Joshikarank" target="_blank" rel="noreferrer">
-                GitHub
-              </a>
-            </Button>
+          {/* 🚀 AI VALUE PROPOSITION */}
+          <div className="flex flex-col items-center lg:items-start gap-2">
+            <p className="text-sm font-medium text-primary">
+              ⚡ Short on time? Ask my AI — get instant answers about me
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+              
+              <Button asChild>
+                <a href="#about">Learn More</a>
+              </Button>
+
+              <Button variant="outline" asChild>
+                <a
+                  href="https://github.com/Joshikarank"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </a>
+              </Button>
+
+              {/* 🤖 AI BUTTON */}
+              <Button className="shadow-md" asChild>
+                <Link href="/joshis-ai">
+                  🤖 Ask Joshi&apos;s AI
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
 
+        {/* RIGHT IMAGE */}
         <div className="relative mx-auto w-full max-w-sm">
           <div className="relative aspect-square overflow-hidden rounded-[1.5rem]">
             <Image
@@ -52,6 +82,7 @@ export default function Hero() {
             />
           </div>
         </div>
+
       </div>
     </section>
   );
