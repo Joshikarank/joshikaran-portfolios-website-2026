@@ -27,6 +27,9 @@ function getClientKey(req: Request) {
 
 function enforceRateLimit(clientKey: string) {
   const now = Date.now();
+  for (const [key, entry] of rateLimitMap) {
+    if (now - entry.windowStart >= RATE_LIMIT_WINDOW_MS) rateLimitMap.delete(key);
+  }
   const state = rateLimitMap.get(clientKey);
 
   if (!state || now - state.windowStart > RATE_LIMIT_WINDOW_MS) {
@@ -35,19 +38,17 @@ function enforceRateLimit(clientKey: string) {
       windowStart: now,
       lastRequest: now,
     });
-    return;
+    return 0;
   }
 
   if (now - state.lastRequest < MIN_REQUEST_INTERVAL_MS) {
-    throw new Error("Too many requests. Please wait a moment before trying again.");
+    return Math.ceil((MIN_REQUEST_INTERVAL_MS - (now - state.lastRequest)) / 1000);
   }
 
+  if (state.count >= RATE_LIMIT_MAX_REQUESTS) return Math.ceil((RATE_LIMIT_WINDOW_MS - (now - state.windowStart)) / 1000);
   state.count += 1;
   state.lastRequest = now;
-
-  if (state.count > RATE_LIMIT_MAX_REQUESTS) {
-    throw new Error("Rate limit exceeded. Try again later.");
-  }
+  return 0;
 }
 
 // ---------- embedding ----------
@@ -152,7 +153,13 @@ export async function POST(req: Request) {
       );
     }
 
-    enforceRateLimit(clientKey);
+    const retryAfter = enforceRateLimit(clientKey);
+    if (retryAfter > 0) {
+      return NextResponse.json(
+        { error: `Please wait ${retryAfter} seconds before asking another question.` },
+        { status: 429, headers: { "Retry-After": String(retryAfter) } }
+      );
+    }
 
     // 1. embed query
     const embedding = await getEmbedding(query);

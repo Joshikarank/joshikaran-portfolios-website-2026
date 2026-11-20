@@ -1,13 +1,9 @@
-"use client";
-
-import Chat from "@/components/joshis-ai/Chat";
+﻿import Chat from "@/components/joshis-ai/Chat";
 
 export default function JoshiAIPage() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl">
-        <Chat />
-      </div>
-    </div>
+    <main className="flex flex-1 items-center justify-center bg-muted/10 px-4 py-6 sm:px-6 sm:py-10">
+      <div className="w-full max-w-4xl"><Chat /></div>
+    </main>
   );
 }
